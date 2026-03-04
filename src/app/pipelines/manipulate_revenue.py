@@ -1,13 +1,13 @@
 import pandas as pd
 from sqlalchemy import text
-from app.db.engine import engine
-from app.transformations.revenue_transform import (
+from src.app.db.engine import engine
+from src.app.transformations.revenue_transform import (
     standardize_columns,
     remove_bad_rows,
     add_features,
     monthly_rollups,
 )
-
+from src.app.graphs.graph import plot_revenue_trends
 
 def run():
     # engine = create_engine()
@@ -40,6 +40,8 @@ def run():
     monthly.to_sql("revenue_monthly_metrics", engine, schema="dbo", if_exists="replace", index=False)
 
     print("\nWrote tables: dbo.stg_revenue_clean, dbo.revenue_monthly_metrics")
+
+    plot_revenue_trends(df)
 
 
 if __name__ == "__main__":

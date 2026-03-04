@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from urllib.parse import quote_plus
-from app.config import settings
+from src.app.config import settings
 
 def build_connection_url() -> str:
     driver = settings.sqlserver_driver

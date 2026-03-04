@@ -1,5 +1,5 @@
 from sqlalchemy import text
-from app.db.engine import engine
+from src.app.db.engine import engine
 
 def db_healthcheck() -> None:
     with engine.connect() as conn:

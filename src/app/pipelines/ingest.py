@@ -1,7 +1,7 @@
 import logging
 import pandas as pd
 from sqlalchemy import text
-from app.db.engine import engine
+from src.app.db.engine import engine
 
 log = logging.getLogger(__name__)
 

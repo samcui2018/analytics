@@ -3,7 +3,8 @@ import pandas as pd
 def standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Normalize column names + basic dtype coercion."""
     out = df.copy()
-    out.columns = [c.strip() for c in out.columns]
+    # out.columns = [c.strip() for c in out.columns]
+    out.columns = out.columns.str.strip()
 
     if "RevenueMonth" in out.columns:
         out["RevenueMonth"] = pd.to_datetime(out["RevenueMonth"], errors="coerce")
@@ -17,13 +18,13 @@ def remove_bad_rows(df: pd.DataFrame) -> pd.DataFrame:
     """Drop rows missing key fields, keep data clean."""
     out = df.copy()
 
-    required = [c for c in ["RevenueMonth", "Revenue"] if c in out.columns]
+    required = [c for c in ["RevenueMonth", "Revenue"] if c in out.columns] 
     if required:
         out = out.dropna(subset=required)
 
     # Example: remove negative revenue if that doesn't make sense
     if "Revenue" in out.columns:
-        out = out[out["Revenue"] >= 0]
+        out = out[out["Revenue"] >= 0] #“If the Revenue column exists, remove all rows where Revenue is negative.
 
     return out
 

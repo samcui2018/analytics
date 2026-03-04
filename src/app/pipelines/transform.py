@@ -1,16 +1,16 @@
 import logging
 from sqlalchemy import text
-from app.db.engine import engine
+from src.app.db.engine import engine
 
 log = logging.getLogger(__name__)
 
-def transform_merchants() -> None:
-    sql = """
-    select 1
-    """
+def call_sp() -> None:
     with engine.begin() as conn:
-        conn.execute(text(sql))
-    log.info("Transformed merchants into cur.dim_merchant")
+        # conn.execute(text(sql))
+        result = conn.execute(text("EXEC spJobGet"))
+        rows = result.fetchall()
+        print(rows)
+    log.info("running spJobGet")
 # IF OBJECT_ID('cur.dim_merchant', 'U') IS NULL
 #     BEGIN
         #     SELECT DISTINCT
