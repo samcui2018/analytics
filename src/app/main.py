@@ -1,3 +1,5 @@
+#from sklearn.cluster import KMeans
+
 from src.app.db.engine import engine
 from src.app.logging_config import configure_logging
 from src.app.pipelines.ingest import ingest_merchants
@@ -8,6 +10,7 @@ from src.app.pipelines.pivottable import run_pivot
 from src.app.graphs.graph import create_pdf_with_image
 from src.app.pipelines.statModelling import run_stat_modelling
 from src.app.pipelines.detectAnomaly import detect_anomalies
+from src.app.pipelines.clustering import run_clustering, plot_cluster_centers, plot_clusters
 def run():
     configure_logging()
     
@@ -23,7 +26,10 @@ def run():
     # run_pivot()
     # create_pdf_with_image("sales_pivot.png", "sales_report.pdf")
     #run_stat_modelling()
-    detect_anomalies()
+    #detect_anomalies()
+    df, kmeans = run_clustering()
+    # plot_clusters(df)
+    plot_cluster_centers(df, kmeans)
     
     
 if __name__ == "__main__":
