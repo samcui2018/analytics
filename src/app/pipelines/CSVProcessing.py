@@ -52,6 +52,20 @@ def load_jobs_from_csv(db_engine, csv_path: str, schema="dbo", table="Jobs2026")
     print(df.head())
 
     with db_engine.begin() as conn:
+        existing = pd.read_sql(
+            text(f"SELECT Position FROM {schema}.{table}"),
+            conn
+        )
+
+        if not existing.empty:
+            existing_positions = set(existing["Position"].astype(str).str.strip())
+
+            # Remove rows already in DB
+            df = df[~df["Position"].astype(str).str.strip().isin(existing_positions)]
+
+        if len(df) == 0:
+            print("No new rows to insert.")
+            return
         df.to_sql(
             name=table,
             schema=schema,
