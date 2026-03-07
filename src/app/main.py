@@ -11,6 +11,10 @@ from src.app.graphs.graph import create_pdf_with_image
 from src.app.pipelines.statModelling import run_stat_modelling
 from src.app.pipelines.detectAnomaly import detect_anomalies
 from src.app.pipelines.clustering import run_clustering, plot_cluster_centers, plot_clusters
+from src.app.pipelines.seasonalDecomposition import seasonaldecomposite
+from src.app.pipelines.priceOptimization import run_price_optimization
+from src.app.pipelines.fraudDetection import run_fraud_detection_RandomForest, run_fraud_detection_RuleBased
+from src.app.pipelines.CustomerChurnPrediction import Customer_Churn_Prediction
 def run():
     configure_logging()
     
@@ -27,10 +31,13 @@ def run():
     # create_pdf_with_image("sales_pivot.png", "sales_report.pdf")
     #run_stat_modelling()
     #detect_anomalies()
-    df, kmeans = run_clustering()
+    #df, kmeans = run_clustering()
     # plot_clusters(df)
-    plot_cluster_centers(df, kmeans)
-    
-    
+    #plot_cluster_centers(df, kmeans)
+    #seasonaldecomposite()
+    #run_price_optimization()
+    #run_fraud_detection_RuleBased()
+    Customer_Churn_Prediction()
+
 if __name__ == "__main__":
     run()
