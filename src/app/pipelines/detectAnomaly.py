@@ -1,7 +1,12 @@
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg") # Use non-interactive backend for environments without display
 import matplotlib.pyplot as plt
+
 from sklearn.ensemble import IsolationForest
+import io
+import base64
 
 def detect_anomalies():
     # Sample data
@@ -35,7 +40,16 @@ def detect_anomalies():
     plt.xlabel("Day")
     plt.ylabel("Sales")
     plt.grid(True)
-    plt.show()
+    # plt.show()
+
+    # Save graph to memory buffer
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format="png")
+    plt.close()
+    buffer.seek(0)
+
+     # Convert image to base64 string
+    graph_base64 = base64.b64encode(buffer.read()).decode("utf-8")
 
     # Using Isolation Forest
     df = pd.DataFrame({
@@ -49,3 +63,4 @@ def detect_anomalies():
     df["is_anomaly"] = df["anomaly_flag"] == -1
 
     print(df)
+    return df, graph_base64

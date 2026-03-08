@@ -15,6 +15,9 @@ from src.app.pipelines.seasonalDecomposition import seasonaldecomposite
 from src.app.pipelines.priceOptimization import run_price_optimization
 from src.app.pipelines.fraudDetection import run_fraud_detection_RandomForest, run_fraud_detection_RuleBased
 from src.app.pipelines.CustomerChurnPrediction import Customer_Churn_Prediction
+
+from fastapi import FastAPI
+from src.app.api.routes import router
 def run():
     configure_logging()
     
@@ -37,7 +40,9 @@ def run():
     #seasonaldecomposite()
     #run_price_optimization()
     #run_fraud_detection_RuleBased()
-    Customer_Churn_Prediction()
+    # Customer_Churn_Prediction()
 
-if __name__ == "__main__":
-    run()
+# if __name__ == "__main__":
+    # run()
+app = FastAPI(title="Analytics API")
+app.include_router(router)
